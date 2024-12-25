@@ -70,6 +70,16 @@ public:
         return Vector2(-x, -y);
     }
 
+    bool operator==(const Vector2 &other) const
+    {
+        return x == other.x && y == other.y;
+    }
+
+    bool operator!=(const Vector2 &other) const
+    {
+        return !(*this == other);
+    }
+
     std::string toString() const
     {
         std::ostringstream oss;
@@ -104,6 +114,8 @@ int main()
     cls.func<static_cast<float (Vector2::*)(int) const>(&Vector2::operator[])>(wren::OPERATOR_GET_INDEX);
     cls.func<static_cast<float &(Vector2::*)(int)>(&Vector2::operator[])>(wren::OPERATOR_SET_INDEX);
     cls.func<&Vector2::toString>("toString");
+    cls.func<&Vector2::operator==>(wren::OPERATOR_EQUAL);
+    cls.func<&Vector2::operator!=>(wren::OPERATOR_NOT_EQUAL);
 
     std::ofstream outFile("Vector2.wren");
     cls.generate(outFile);
@@ -114,24 +126,30 @@ int main()
 
         var v1 = Vector2.new(1.0, 2.0)
         var v2 = Vector2.new(3.0, 4.0)
+        var v3 = Vector2.new(1.0, 2.0)
 
         System.print("v1: %(v1.toString())\n\n")
         System.print("v2: %(v2.toString())\n\n")
 
-        var v3 = v1 + v2
-        System.print("v1 + v2: %(v3.toString())\n\n")
+        System.print("v1 == v2: %(v1 == v2)\n\n")
+        System.print("v1 == v3: %(v1 == v3)\n\n")
+        System.print("v1 != v2: %(v1 != v2)\n\n")
+        System.print("v1 != v3: %(v1 != v3)\n\n")
 
-        var v4 = v1 - v2
-        System.print("v1 - v2: %(v4.toString())\n\n")
+        var v4 = v1 + v2
+        System.print("v1 + v2: %(v4.toString())\n\n")
 
-        var v5 = v1 * 2.0
-        System.print("v1 * 2.0: %(v5.toString())\n\n")
+        var v5 = v1 - v2
+        System.print("v1 - v2: %(v5.toString())\n\n")
 
-        var v6 = v1 / 2.0
-        System.print("v1 / 2.0: %(v6.toString())\n\n")
+        var v6 = v1 * 2.0
+        System.print("v1 * 2.0: %(v6.toString())\n\n")
 
-        var v7 = -v1
-        System.print("-v1: %(v7.toString())\n\n")
+        var v7 = v1 / 2.0
+        System.print("v1 / 2.0: %(v7.toString())\n\n")
+
+        var v8 = -v1
+        System.print("-v1: %(v8.toString())\n\n")
 
         System.print("v1[0]: %(v1[0])\n\n")
         System.print("v1[1]: %(v1[1])\n\n")
