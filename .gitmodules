@@ -1,0 +1,3 @@
+[submodule "vendor/wrenbind"]
+	path = vendor/wrenbind
+	url = https://github.com/fgsoftware1/wrenbind17
